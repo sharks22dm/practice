@@ -4,11 +4,17 @@ from tabulate import tabulate
 
 
 class PriceMachine:
+    """" Анализатор прайс-листов """
 
     def __init__(self):
         self.data = []
 
     def load_prices(self, file_path='price_lists/'):
+        """
+        Выборка прайс-листов
+        Чтение и сортировка данных
+        Создание массива данных
+        """
         for file in os.listdir(file_path):
             if 'price' in file.lower():
                 with open(file_path + file, 'r', encoding='utf-8') as f:
@@ -29,6 +35,7 @@ class PriceMachine:
                             self.data.append({'name': name, 'price': price, 'weight': weight, 'file': file})
 
     def export_to_html(self, fname='output.html'):
+        """ Выгрузка данных в html """
         result = '''
         <!DOCTYPE html>
         <html>
@@ -62,6 +69,10 @@ class PriceMachine:
             f.write(result)
 
     def find_text(self, text):
+        """
+        Обработка запроса пользователя
+        Выдача результата с сортировкой по цене за килограмм
+        """
         result = []
         text_lower = text.lower()
         for item in self.data:
